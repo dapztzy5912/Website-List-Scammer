@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Laporan Scammer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0D6EFD; /* Bootstrap Primary Blue, mirip Adobe */
+            --light-blue-bg: #E3F2FD;
+            --light-blue-accent: #7CB9E8;
+            --text-dark: #212529;
+            --text-muted: #6C757D;
+            --border-light: #DEE2E6;
+            --background-page: #F8F9FA;
+            --surface-card: #FFFFFF;
+            --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+            --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--background-page);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-bottom: 50px; /* Space for footer or last card */
+        }
+
+        .navbar {
+            background-color: var(--primary-blue);
+            padding: 15px 20px;
+            color: white;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 30px;
+        }
+
+        .navbar .container-fluid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+        }
+        .navbar-brand i {
+            margin-right: 8px;
+        }
+
+        .back-button {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 8px 15px;
+            border: 1px solid white;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .back-button:hover {
+            background-color: white;
+            color: var(--primary-blue);
+        }
+        .back-button i {
+            margin-right: 5px;
+        }
+
+
+        .detail-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .loading-state, .error-state {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+        .loading-state i, .error-state i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 15px;
+            color: var(--primary-blue);
+        }
+
+        .scammer-header {
+            background-color: var(--surface-card);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border: 1px solid var(--border-light);
+        }
+
+        .scammer-header h1 {
+            font-size: 2.2rem;
+            color: var(--primary-blue);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        .scammer-header h1 i {
+            margin-right: 10px;
+        }
+
+        .scammer-header .scam-type-badge {
+            display: inline-block;
+            background-color: var(--light-blue-bg);
+            color: var(--primary-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--light-blue-accent);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 992px) {
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr); /* Two columns for larger screens */
+            }
+            .grid-col-span-2 {
+                grid-column: span 2;
+            }
+        }
+
+
+        .detail-card {
+            background-color: var(--surface-card);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .detail-card-header {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+        }
+        .detail-card-header i {
+            margin-right: 12px;
+            font-size: 1.2em; /* Make icon slightly larger than text */
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column; /* Stack label and value for better readability */
+        }
+        .detail-item .label {
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .detail-item .label i {
+            margin-right: 6px;
+            width: 16px; /* Ensure consistent icon alignment */
+            text-align: center;
+        }
+        .detail-item .value {
+            font-size: 1rem;
+            color: var(--text-dark);
+            word-break: break-word;
+        }
+        .detail-item .value a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .detail-item .value a:hover {
+            text-decoration: underline;
+        }
+        .detail-item .value.description-text {
+             white-space: pre-wrap; /* Preserve line breaks in description */
+        }
+        .detail-item .no-data {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .evidence-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+        }
+        .evidence-item {
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border-light);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .evidence-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+        .evidence-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .no-evidence {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+        .no-evidence i {
+            display: block;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .image-fullscreen-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: flex; align-items: center;
+            justify-content: center; z-index: 100; cursor: pointer;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .image-fullscreen-modal.show {
+            opacity: 1; visibility: visible;
+        }
+        .image-fullscreen-modal img {
+            max-width: 90%; max-height: 90%; border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand"><i class="fas fa-shield-alt"></i>WaspadaScam</a>
+            <a href="/" class="back-button"><i class="fas fa-arrow-left"></i> Kembali ke Daftar</a>
+        </div>
+    </nav>
+
+    <div class="detail-container" id="detailContentRoot">
+        <div class="loading-state" id="loadingState">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Memuat detail laporan...</p>
+        </div>
+    </div>
+
+    <div class="image-fullscreen-modal" id="imageFullscreenModal" onclick="closeImageFullscreenModal()">
+        <img id="fullscreenImage" src="" alt="Bukti Foto Fullscreen">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const detailContentRoot = document.getElementById('detailContentRoot');
+            const loadingState = document.getElementById('loadingState');
+            const scammerId = window.location.pathname.split('/').pop();
+
+            if (!scammerId) {
+                renderError('ID Laporan tidak valid.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/scammer/${scammerId}`);
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('Laporan scammer tidak ditemukan.');
+                    }
+                    throw new Error(`Gagal memuat data: ${response.statusText}`);
+                }
+                const scammer = await response.json();
+                renderScammerDetail(scammer);
+            } catch (error) {
+                console.error('Error fetching scammer detail:', error);
+                renderError(error.message || 'Terjadi kesalahan saat mengambil data.');
+            } finally {
+                if(loadingState) loadingState.style.display = 'none';
+            }
+        });
+
+        function renderError(message) {
+            const detailContentRoot = document.getElementById('detailContentRoot');
+            detailContentRoot.innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>${message}</p>
+                </div>`;
+        }
+        
+        function sanitizeHTML(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
+
+        function renderScammerDetail(scammer) {
+            const detailContentRoot = document.getElementById('detailContentRoot');
+            
+            const reportedDate = new Date(scammer.createdAt).toLocaleDateString('id-ID', {
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            let evidenceHTML = `<div class="no-evidence"><i class="fas fa-camera-slash"></i><p>Tidak ada bukti foto yang dilampirkan.</p></div>`;
+            if (scammer.evidence && scammer.evidence.length > 0) {
+                evidenceHTML = `<div class="evidence-gallery">
+                    ${scammer.evidence.map(imgFile => `
+                        <div class="evidence-item" onclick="openImageFullscreenModal('/uploads/${imgFile}')">
+                            <img src="/uploads/${imgFile}" alt="Bukti ${sanitizeHTML(scammer.name)}">
+                        </div>
+                    `).join('')}
+                </div>`;
+            }
+            
+            const phoneHTML = scammer.phone ? `
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-phone-alt"></i> Nomor Telepon:</span>
+                    <span class="value">${sanitizeHTML(scammer.phone)}</span>
+                </div>` : '';
+            
+            const socialMediaHTML = scammer.socialMedia ? `
+                <div class="detail-item">
+                    <span class="label"><i class="fab fa-instagram"></i> Media Sosial:</span>
+                    <span class="value">${sanitizeHTML(scammer.socialMedia)}</span>
+                </div>` : '';
+
+            const websiteHTML = scammer.website ? `
+                <div class="detail-item">
+                    <span class="label"><i class="fas fa-globe"></i> Website/Platform:</span>
+                    <span class="value"><a href="${sanitizeHTML(scammer.website)}" target="_blank" rel="noopener noreferrer">${sanitizeHTML(scammer.website)}</a></span>
+                </div>` : '';
+
+            const descriptionHTML = scammer.description ? `
+                <div class="detail-card grid-col-span-2">
+                    <h2 class="detail-card-header"><i class="fas fa-file-alt"></i> Deskripsi / Kronologi Kejadian</h2>
+                    <div class="detail-item">
+                        <span class="value description-text">${sanitizeHTML(scammer.description)}</span>
+                    </div>
+                </div>
+            ` : `
+                <div class="detail-card grid-col-span-2">
+                     <h2 class="detail-card-header"><i class="fas fa-file-alt"></i> Deskripsi / Kronologi Kejadian</h2>
+                    <div class="detail-item">
+                        <span class="value no-data">Tidak ada deskripsi yang diberikan.</span>
+                    </div>
+                </div>
+            `;
+
+
+            detailContentRoot.innerHTML = `
+                <header class="scammer-header">
+                    <h1><i class="fas fa-user-secret"></i> ${sanitizeHTML(scammer.name)}</h1>
+                    <span class="scam-type-badge">${sanitizeHTML(scammer.scamType)}</span>
+                </header>
+
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <h2 class="detail-card-header"><i class="fas fa-info-circle"></i> Informasi Laporan</h2>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-user"></i> Nama Dilaporkan:</span>
+                            <span class="value">${sanitizeHTML(scammer.name)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-tag"></i> Jenis Penipuan:</span>
+                            <span class="value">${sanitizeHTML(scammer.scamType)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label"><i class="fas fa-calendar-alt"></i> Tanggal Dilaporkan:</span>
+                            <span class="value">${reportedDate}</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-card">
+                        <h2 class="detail-card-header"><i class="fas fa-address-card"></i> Kontak Terlapor</h2>
+                        ${phoneHTML}
+                        ${socialMediaHTML}
+                        ${websiteHTML}
+                        ${!scammer.phone && !scammer.socialMedia && !scammer.website ? '<div class="detail-item"><span class="value no-data">Tidak ada informasi kontak tambahan.</span></div>' : ''}
+                    </div>
+                    
+                    ${descriptionHTML}
+
+                    <div class="detail-card grid-col-span-2">
+                        <h2 class="detail-card-header"><i class="fas fa-images"></i> Bukti Foto</h2>
+                        ${evidenceHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function openImageFullscreenModal(src) {
+            const modal = document.getElementById('imageFullscreenModal');
+            const imgElement = document.getElementById('fullscreenImage');
+            imgElement.src = src;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageFullscreenModal() {
+            const modal = document.getElementById('imageFullscreenModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (document.getElementById('imageFullscreenModal').classList.contains('show')) {
+                    closeImageFullscreenModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
