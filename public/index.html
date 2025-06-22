@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Scammer/Penipuan - Waspada Bersama</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <style>
+        :root {
+            --primary-blue: #0D6EFD;
+            --light-blue-bg: #E3F2FD;
+            --light-blue-accent: #85C1E9; 
+            --text-dark: #212529;
+            --text-light: #F8F9FA;
+            --text-muted: #6C757D;
+            --border-light: #DEE2E6;
+            --background-page: #F0F4F8;
+            --surface-card: #FFFFFF;
+            --shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075);
+            --shadow-md: 0 .5rem 1rem rgba(0,0,0,.15);
+            --gradient-button: linear-gradient(135deg, var(--primary-blue), var(--light-blue-accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background-page);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: var(--surface-card);
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-light);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+        
+        .header h1 i {
+            margin-right: 10px;
+            color: var(--primary-blue);
+        }
+
+        .header p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: 90px; 
+        }
+        
+        .header p.sub-instruction {
+             min-height: 0;
+             font-size: 1rem;
+             color: var(--primary-blue);
+        }
+
+
+        .credit {
+            font-size: 0.9rem;
+            color: #757575;
+            margin-top: 25px;
+        }
+
+        .add-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--gradient-button);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 35px rgba(13, 110, 253, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5vh auto;
+            background: var(--surface-card);
+            padding: 35px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-light);
+        }
+        
+        .modal h2 {
+            margin-bottom: 30px;
+            color: var(--primary-blue);
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .modal h2 i {
+            margin-right: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid var(--border-light);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: #FDFEFE; /* Slightly off-white for inputs */
+            color: var(--text-dark);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--light-blue-accent);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--light-blue-bg);
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-blue);
+            background: #D6EAF8; /* Slightly darker hover */
+        }
+        
+        .file-upload i {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--border-light);
+            background: var(--background-page);
+        }
+
+        .preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 53, 69, 0.8); /* Red for remove */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+        .preview-item .remove-btn:hover {
+            background: #DC3545; /* Bootstrap danger red */
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-button);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-secondary {
+            background: #E9ECEF; /* Light gray for secondary */
+            color: var(--text-dark);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover {
+            background: #CED4DA; /* Darker gray on hover */
+        }
+
+        .scammer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .scammer-card {
+            background: var(--surface-card);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scammer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-blue);
+        }
+
+        .scammer-info h3 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+         .scammer-info h3 i {
+            margin-right: 8px;
+         }
+
+        .scammer-info p {
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .scammer-info .label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 5px;
+        }
+        .scammer-info .label i {
+             width: 16px; text-align: center;
+        }
+
+        .evidence-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 5px; 
+        }
+
+        .evidence-images img {
+            width: 55px;
+            height: 55px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-light);
+        }
+
+        .evidence-images img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .evidence-images .more-evidence {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55px;
+            height: 55px;
+            background: var(--light-blue-bg);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            border: 1px solid var(--light-blue-accent);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--primary-blue);
+            transform: scale(1.1);
+        }
+
+        .no-data-message {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            background-color: var(--surface-card);
+            border-radius: 15px;
+            border: 1px solid var(--border-light);
+        }
+        .no-data-message i.main-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+            color: var(--primary-blue);
+        }
+        .no-data-message h3 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .header h1 {
+                font-size: 2.2rem;
+            }
+             .header p {
+                font-size: 1rem;
+                min-height: 100px;
+            }
+            
+            .modal-content {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            
+            .scammer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                font-size: 0.95rem;
+                padding: 12px 20px;
+            }
+        }
+        
+        .image-fullscreen-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: flex; align-items: center;
+            justify-content: center; z-index: 3000; cursor: pointer;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .image-fullscreen-modal.show {
+            opacity: 1; visibility: visible;
+        }
+        .image-fullscreen-modal img {
+            max-width: 90%; max-height: 90%; border-radius: 10px;
+            border: 2px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .typed-cursor {
+            opacity: 1;
+            animation: typedjsBlink 0.7s infinite;
+        }
+        @keyframes typedjsBlink {
+            50% { opacity: 0.0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-user-shield"></i>WASPADA SCAMMER ONLINE</h1>
+            <p id="typed-description"></p>
+            <p class="sub-instruction">Laporkan penipu dengan menekan tombol <i class="fas fa-plus-circle"></i> di pojok kanan bawah.</p>
+            <div class="credit">Web By XdpzQ & Community</div>
+        </div>
+
+        <div class="scammer-grid" id="scammerGrid">
+        </div>
+    </div>
+
+    <button class="add-btn" onclick="openModal()" aria-label="Tambah Scammer Baru">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <div class="modal" id="addScammerModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()" aria-label="Tutup Modal"><i class="fas fa-times"></i></button>
+            <h2><i class="fas fa-user-plus"></i>Tambah Laporan Scammer</h2>
+            <form id="scammerForm">
+                <div class="form-group">
+                    <label for="name">Nama Penipu / Akun *</label>
+                    <input type="text" id="name" name="name" placeholder="cth: Akun Toko ABC, John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="scamType">Jenis Penipuan *</label>
+                    <input type="text" id="scamType" name="scamType" placeholder="cth: Online shop fiktif, Investasi bodong, Phishing" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Nomor Telepon (Opsional)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx">
+                </div>
+                
+                <div class="form-group">
+                    <label for="socialMedia">Akun Media Sosial (Opsional)</label>
+                    <input type="text" id="socialMedia" name="socialMedia" placeholder="cth: IG @penipu, FB Penipu Handal">
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Link Website / Platform (Opsional)</label>
+                    <input type="url" id="website" name="website" placeholder="https://contohlinkpenipu.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Deskripsi / Kronologi Kejadian (Opsional)</label>
+                    <textarea id="description" name="description" placeholder="Ceritakan detail modus penipuan, kerugian, atau informasi relevan lainnya..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Bukti Foto (Maksimal 6 foto, format JPG/PNG/GIF)</label>
+                    <div class="file-upload" onclick="document.getElementById('evidence').click()" role="button" tabindex="0" aria-label="Unggah bukti foto">
+                        <input type="file" id="evidence" multiple accept="image/*" onchange="handleFileSelect(event)">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Klik atau jatuhkan file di sini untuk unggah</p>
+                        <small>Maks. 2MB per foto</small>
+                    </div>
+                    <div class="preview-container" id="previewContainer"></div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()"><i class="fas fa-ban"></i> Batal</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Kirim Laporan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="image-fullscreen-modal" id="imageFullscreenModal" onclick="closeImageFullscreenModal()">
+        <img id="fullscreenImage" src="" alt="Bukti Foto Fullscreen">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var typed = new Typed('#typed-description', {
+                strings: ['Website ini didedikasikan untuk meningkatkan kesadaran dan membantu masyarakat mengidentifikasi serta menghindari berbagai modus penipuan. Mari berbagi informasi untuk saling melindungi.'],
+                typeSpeed: 30,
+                backSpeed: 10,
+                startDelay: 500,
+                showCursor: true,
+                cursorChar: '|',
+                loop: false
+            });
+            loadScammerData();
+        });
+
+
+        let selectedFiles = [];
+        const MAX_FILES = 6;
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+
+        function openModal() {
+            document.getElementById('addScammerModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('addScammerModal').style.display = 'none';
+            document.getElementById('scammerForm').reset();
+            selectedFiles = [];
+            document.getElementById('previewContainer').innerHTML = '';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showScammerDetail(scammerId) {
+            window.location.href = `/detail/${scammerId}`;
+        }
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            
+            files.forEach(file => {
+                if (selectedFiles.length >= MAX_FILES) {
+                    alert(`Maksimal ${MAX_FILES} foto yang diizinkan!`);
+                    return; 
+                }
+                if (file.size > MAX_FILE_SIZE) {
+                    alert(`Ukuran file "${file.name}" terlalu besar. Maksimal 2MB.`);
+                    return;
+                }
+                if (file.type.startsWith('image/')) {
+                    if (!selectedFiles.find(f => f.name === file.name && f.size === file.size)) {
+                         selectedFiles.push(file);
+                         createPreview(file);
+                    }
+                }
+            });
+            event.target.value = null;
+        }
+
+        function createPreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewContainer = document.getElementById('previewContainer');
+                const previewItem = document.createElement('div');
+                previewItem.className = 'preview-item';
+                
+                previewItem.innerHTML = `
+                    <img src="${e.target.result}" alt="${file.name}">
+                    <button type="button" class="remove-btn" onclick="removePreview(this, '${file.name}')" aria-label="Hapus pratinjau ${file.name}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                previewContainer.appendChild(previewItem);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removePreview(button, fileName) {
+            selectedFiles = selectedFiles.filter(file => file.name !== fileName);
+            button.parentElement.remove();
+        }
+
+        document.getElementById('scammerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('name', document.getElementById('name').value.trim());
+            formData.append('scamType', document.getElementById('scamType').value.trim());
+            formData.append('phone', document.getElementById('phone').value.trim());
+            formData.append('socialMedia', document.getElementById('socialMedia').value.trim());
+            formData.append('website', document.getElementById('website').value.trim());
+            formData.append('description', document.getElementById('description').value.trim());
+            
+            selectedFiles.forEach(file => {
+                formData.append('evidence', file);
+            });
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+            try {
+                const response = await fetch('/api/scammer', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Laporan scammer berhasil ditambahkan!');
+                    closeModal();
+                    loadScammerData();
+                } else {
+                    const errorData = await response.json().catch(() => ({ message: 'Gagal menambahkan scammer. Silakan coba lagi.' }));
+                    alert(`Gagal: ${errorData.message || 'Terjadi kesalahan tidak diketahui'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Laporan';
+            }
+        });
+
+        async function loadScammerData() {
+            const grid = document.getElementById('scammerGrid');
+            grid.innerHTML = `<div class="no-data-message"><i class="fas fa-spinner fa-spin main-icon"></i><h3>Memuat data...</h3></div>`;
+            try {
+                const response = await fetch('/api/scammers');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                displayScammers(data);
+            } catch (error) {
+                console.error('Error loading data:', error);
+                grid.innerHTML = `<div class="no-data-message"><i class="fas fa-exclamation-triangle main-icon"></i><h3>Gagal memuat data</h3><p>Silakan coba muat ulang halaman.</p></div>`;
+            }
+        }
+
+        function displayScammers(scammers) {
+            const grid = document.getElementById('scammerGrid');
+            
+            if (!scammers || scammers.length === 0) {
+                grid.innerHTML = `
+                    <div class="no-data-message">
+                        <i class="fas fa-folder-open main-icon"></i>
+                        <h3>Belum ada data scammer</h3>
+                        <p>Jadilah yang pertama melaporkan dengan klik tombol <i class="fas fa-plus-circle" style="font-size: 1em;"></i> di pojok kanan bawah.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = scammers.map(scammer => {
+                let evidencePreviewHTML = '';
+                if (scammer.evidence && scammer.evidence.length > 0) {
+                    evidencePreviewHTML = `
+                        <div class="evidence-images">
+                            ${scammer.evidence.slice(0, 4).map(img => `
+                                <img src="/uploads/${img}" alt="Bukti kecil" onclick="event.stopPropagation(); openImageFullscreenModal('/uploads/${img}')">
+                            `).join('')}
+                            ${scammer.evidence.length > 4 ? `
+                                <div class="more-evidence" aria-label="${scammer.evidence.length - 4} bukti lainnya">
+                                    +${scammer.evidence.length - 4}
+                                </div>
+                            ` : ''}
+                        </div>`;
+                }
+                
+                const reportedDate = new Date(scammer.createdAt).toLocaleDateString('id-ID', {
+                    day: '2-digit', month: 'short', year: 'numeric'
+                });
+
+                return `
+                <div class="scammer-card" onclick="showScammerDetail('${scammer.id}')" role="button" tabindex="0" aria-label="Lihat detail ${scammer.name}">
+                    <div class="scammer-info">
+                        <h3><i class="fas fa-user-ninja"></i>${scammer.name}</h3>
+                        <p><span class="label"><i class="fas fa-tag"></i>Jenis:</span> ${scammer.scamType}</p>
+                        ${scammer.phone ? `<p><span class="label"><i class="fas fa-phone"></i>No. Telp:</span> ${scammer.phone}</p>` : ''}
+                        ${scammer.socialMedia ? `<p><span class="label"><i class="fab fa-instagram"></i>Medsos:</span> ${scammer.socialMedia}</p>` : ''}
+                        <p><span class="label"><i class="fas fa-calendar-check"></i>Dilaporkan:</span> ${reportedDate}</p>
+                        ${evidencePreviewHTML}
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function openImageFullscreenModal(src) {
+            event.stopPropagation();
+            const modal = document.getElementById('imageFullscreenModal');
+            const imgElement = document.getElementById('fullscreenImage');
+            imgElement.src = src;
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageFullscreenModal() {
+            const modal = document.getElementById('imageFullscreenModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const addModal = document.getElementById('addScammerModal');
+            if (event.target === addModal) {
+                closeModal();
+            }
+        }
+        
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                if (document.getElementById('imageFullscreenModal').classList.contains('show')) {
+                    closeImageFullscreenModal();
+                } else if (document.getElementById('addScammerModal').style.display === 'block') {
+                    closeModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
